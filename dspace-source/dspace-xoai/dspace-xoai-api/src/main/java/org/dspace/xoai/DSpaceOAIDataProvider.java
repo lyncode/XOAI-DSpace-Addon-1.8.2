@@ -57,8 +57,8 @@ public class DSpaceOAIDataProvider extends HttpServlet
         try
         {
             XOAIManager.initialize(ConfigurationManager
-                    .getProperty("oai", "config.dir"));
-            if (!"database".equals(ConfigurationManager.getProperty("oai", "storage"))) {
+                    .getProperty("xoai", "config.dir"));
+            if (!"database".equals(ConfigurationManager.getProperty("xoai", "storage"))) {
                 DSpaceSolrServer.getServer();
             }
             System.out.println("[OAI 2.0] Initialized");
@@ -106,7 +106,7 @@ public class DSpaceOAIDataProvider extends HttpServlet
 
             DSpaceItemRepository repository;
             String storage = ConfigurationManager
-                    .getProperty("oai", "storage");
+                    .getProperty("xoai", "storage");
             if (storage == null
                     || !storage.trim().toLowerCase().equals("database"))
             {

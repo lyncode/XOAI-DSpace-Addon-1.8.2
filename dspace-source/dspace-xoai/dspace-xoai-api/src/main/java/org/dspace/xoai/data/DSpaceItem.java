@@ -67,7 +67,7 @@ public abstract class DSpaceItem extends AbstractItem
     public static String buildIdentifier (String handle) {
         if (_prefix == null)
         {
-            _prefix = ConfigurationManager.getProperty("oai",
+            _prefix = ConfigurationManager.getProperty("xoai",
                     "identifier.prefix");
         }
         return "oai:" + _prefix + ":" + handle;
