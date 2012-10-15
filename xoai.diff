@@ -1,0 +1,129 @@
+diff --git a/dspace/config/launcher.xml b/dspace/config/launcher.xml
+index c6e86b3..83bffc3 100644
+--- a/dspace/config/launcher.xml
++++ b/dspace/config/launcher.xml
+@@ -346,6 +346,13 @@
+ 			<class>org.dspace.discovery.IndexClient</class>
+ 		</step>
+ 	</command>
+-
++	
++	<command>
++		<name>xoai</name>
++		<description>XOAI script manager</description>
++		<step>
++			<class>org.dspace.xoai.app.XOAI</class>
++		</step>
++	</command>
+ 
+ </commands>
+diff --git a/dspace/modules/pom.xml b/dspace/modules/pom.xml
+index c77a762..435045a 100644
+--- a/dspace/modules/pom.xml
++++ b/dspace/modules/pom.xml
+@@ -59,6 +59,15 @@
+                 <module>oai</module>
+             </modules>
+         </profile>
++		<profile>
++            <id>dspace-xoai</id>
++            <activation>
++                <activeByDefault>true</activeByDefault>
++            </activation>
++            <modules>
++                <module>xoai</module>
++            </modules>
++        </profile>
+         <profile>
+             <id>dspace-jspui</id>
+             <activation>
+diff --git a/dspace/pom.xml b/dspace/pom.xml
+index 2152642..c1934c1 100644
+--- a/dspace/pom.xml
++++ b/dspace/pom.xml
+@@ -215,6 +215,10 @@
+             <groupId>org.dspace</groupId>
+             <artifactId>dspace-api</artifactId>
+         </dependency>
++		<dependency>
++            <groupId>org.dspace</groupId>
++            <artifactId>dspace-xoai-api</artifactId>
++        </dependency>
+         <dependency>
+             <groupId>org.dspace</groupId>
+             <artifactId>dspace-api-lang</artifactId>
+diff --git a/dspace/solr/solr.xml b/dspace/solr/solr.xml
+index 2990656..41a32ce 100644
+--- a/dspace/solr/solr.xml
++++ b/dspace/solr/solr.xml
+@@ -31,6 +31,7 @@
+   <cores adminPath="/admin/cores">
+     <core name="search" instanceDir="search" />
+     <core name="statistics" instanceDir="statistics" />
++	<core name="xoai" instanceDir="xoai" />
+   </cores>
+   
+ </solr>
+diff --git a/dspace/src/main/config/build.xml b/dspace/src/main/config/build.xml
+index 7fcb750..903df8e 100644
+--- a/dspace/src/main/config/build.xml
++++ b/dspace/src/main/config/build.xml
+@@ -729,6 +729,8 @@ Common usage:
+         <mkdir dir="${report.dir}" />
+ 
+     	<mkdir dir="${dspace.dir}/solr" />
++		
++		<mkdir dir="${dspace.dir}/var" />
+ 
+     </target>
+ 
+diff --git a/pom.xml b/pom.xml
+index b733d24..ecaa457 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -150,6 +150,19 @@
+             </modules>
+         </profile>
+ 
++		<!--
++           Builds XOAI Gateway WAR for DSpace
++        -->
++        <profile>
++            <id>dspace-xoai</id>
++            <activation>
++                <activeByDefault>true</activeByDefault>
++            </activation>
++            <modules>
++                <module>dspace-xoai</module>
++            </modules>
++        </profile>
++
+         <!--
+            Builds JSPUI WAR for DSpace
+         -->
+@@ -248,6 +261,7 @@
+             <module>dspace-xmlui</module>
+             <module>dspace-lni</module>
+             <module>dspace-oai</module>
++			<module>dspace-xoai</module>
+             <module>dspace-sword</module>
+             <module>dspace-swordv2</module>
+             <module>dspace-sword-client</module>
+@@ -389,6 +403,17 @@
+             <version>${project.version}</version>
+             <type>war</type>
+          </dependency>
++		<dependency>
++            <groupId>org.dspace</groupId>
++            <artifactId>dspace-xoai-api</artifactId>
++            <version>${project.version}</version>
++         </dependency>
++         <dependency>
++            <groupId>org.dspace</groupId>
++            <artifactId>dspace-xoai-webapp</artifactId>
++            <version>${project.version}</version>
++            <type>war</type>
++         </dependency>
+          <dependency>
+             <groupId>org.dspace</groupId>
+             <artifactId>dspace-lni-core</artifactId>
