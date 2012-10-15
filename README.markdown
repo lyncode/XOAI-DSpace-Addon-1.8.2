@@ -14,5 +14,5 @@ XOAI is the most powerfull OAI interface for DSpace. Enabling features like:
 
 Links:
 
-* [Documentation](https://github.com/lyncode/XOAI-DSpace-Addon-1.8.2/wiki)
+* [Offical website](http://www.lyncode.com/dspace/addons/xoai/)
 * [DSpace now uses XOAI](https://wiki.duraspace.org/display/DSDOC3x/OAI+2.0+Server)
